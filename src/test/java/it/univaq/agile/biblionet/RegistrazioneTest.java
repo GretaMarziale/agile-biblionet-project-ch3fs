@@ -28,7 +28,7 @@ public class RegistrazioneTest {
         assertEquals("Anna", persona.getNome());
         assertEquals("Verdi", persona.getCognome());
         assertEquals(Ruolo.BIBLIOTECARIO, persona.getRuolo());
-        assertTrue(persona.getCodiceTessera().startsWith("B"), "La tessera deve iniziare con B-");
+        assertTrue(persona.getCodiceTessera().startsWith("B"), "La tessera deve iniziare con B");
 	}
 	
 	@Test
@@ -42,6 +42,15 @@ public class RegistrazioneTest {
         assertEquals("Rossi", persona.getCognome());
         assertEquals(Ruolo.RESPONSABILE, persona.getRuolo());
         assertTrue(persona.getCodiceTessera().startsWith("R"), "La tessera deve iniziare con R");
+	}
+	
+	@Test
+	@DisplayName("Dato che due persone si registrano, allora il sistema genera due tessere diverse.")
+	void testTessereUniche() {
+		SistemaBiblioteca sistema = new SistemaBiblioteca();
+		Persona prima = sistema.registra("Aurora", "Braconi", Ruolo.UTENTE);
+		Persona seconda = sistema.registra("Anna", "Verdi", Ruolo.UTENTE);
+		assertNotEquals(prima.getCodiceTessera(), seconda.getCodiceTessera());
 	}
 }
 
