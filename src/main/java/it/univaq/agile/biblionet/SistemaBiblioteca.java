@@ -57,4 +57,15 @@ public class SistemaBiblioteca {
 	public Prestito trovaPrestito(String isbn) {
 		return prestitiAttivi.get(isbn);
 	}
+	
+	// Registra il rientro di un libro: chiude il prestito e rende il libro di nuovo disponibile 
+	 public boolean registraRestituzione(String isbn) { 
+		 Prestito prestito = prestitiAttivi.get(isbn); 
+		 // Se quel libro non è in prestito, non c'è niente da restituire 
+		 if (prestito == null) return false; 
+		 // Chiudiamo il prestito e rendiamo il libro di nuovo disponibile 
+		 prestito.getLibro().setDisponibile(true); 
+		 prestitiAttivi.remove(isbn); 
+		 return true;
+	 }
 }
