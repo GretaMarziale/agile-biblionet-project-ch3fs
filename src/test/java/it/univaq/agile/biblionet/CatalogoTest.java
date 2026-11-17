@@ -71,4 +71,26 @@ public class CatalogoTest {
 		// L'elenco deve essere vuoto
 		assertTrue(vuoto.getElencoLibri().isEmpty());
 	}
+	
+	@Test
+	@DisplayName("UE-04: Dato che l'utente seleziona un libro disponibile, quando clicca su 'Prenota', allora il sistema registra la prenotazione,...")
+	void testPrenotazioneLibroDisponibile() {
+		// Prendiamo il primo libro del catalogo (Harry Potter, disponibile)
+		Libro libro = catalogo.getElencoLibri().get(0);
+		// Prenotiamo il libro
+		boolean prenotato = catalogo.prenotaLibro(libro);
+		// La prenotazione deve essere andata a buon fine
+		assertTrue(prenotato);
+	}
+
+	@Test
+	@DisplayName("UE-04: ... blocca la copia per gli altri")
+	void testLibroBloccatoDopoPrenotazione() {
+		// Prendiamo Harry Potter, che è disponibile
+		Libro libro = catalogo.getElencoLibri().get(0);
+		// Prenotiamo il libro
+		catalogo.prenotaLibro(libro);
+		// Il libro prenotato non deve più essere disponibile
+		assertFalse(catalogo.getElencoLibri().get(0).isDisponibile());
+	}
 }
