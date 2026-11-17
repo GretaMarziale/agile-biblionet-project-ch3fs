@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RegistrazioneTest {
 	@Test
-	@DisplayName("Dato che una persona apre la registrazione selezionando il ruolo Utente, quando compila i dati "
+	@DisplayName("UE-01: Dato che una persona apre la registrazione selezionando il ruolo Utente, quando compila i dati "
 			+ "e invia, allora il sistema crea l'account, genera una tessera univoca con prefisso 'U' e sblocca l'accesso.")
 	void testRegistrazioneUtente() {
 		SistemaBiblioteca sistema = new SistemaBiblioteca();
@@ -19,7 +19,7 @@ public class RegistrazioneTest {
 	}
 	
 	@Test
-	@DisplayName("Dato che una persona apre la registrazione selezionando il ruolo Bibliotecario, quando compila i dati "
+	@DisplayName("UE-01: Dato che una persona apre la registrazione selezionando il ruolo Bibliotecario, quando compila i dati "
 			+ "e invia, allora il sistema crea l'account, genera una tessera univoca con prefisso 'B' e sblocca l'accesso.")
 	void testRegistrazioneBibliotecario() {
 		SistemaBiblioteca sistema = new SistemaBiblioteca();
@@ -32,7 +32,7 @@ public class RegistrazioneTest {
 	}
 	
 	@Test
-	@DisplayName("Dato che una persona apre la registrazione selezionando il ruolo Responsabile, quando compila i dati "
+	@DisplayName("UE-01: Dato che una persona apre la registrazione selezionando il ruolo Responsabile, quando compila i dati "
 			+ "e invia, allora il sistema crea l'account, genera una tessera univoca con prefisso 'R' e sblocca l'accesso.")
 	void testRegistrazioneResponsabile() {
 		SistemaBiblioteca sistema = new SistemaBiblioteca();
@@ -45,7 +45,7 @@ public class RegistrazioneTest {
 	}
 	
 	@Test
-	@DisplayName("Dato che due persone si registrano, allora il sistema genera due tessere diverse.")
+	@DisplayName("UE-01: Dato che due persone si registrano, allora il sistema genera due tessere diverse.")
 	void testTessereUniche() {
 		SistemaBiblioteca sistema = new SistemaBiblioteca();
 		Persona prima = sistema.registra("Aurora", "Braconi", Ruolo.UTENTE);
