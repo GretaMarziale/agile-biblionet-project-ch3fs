@@ -1,0 +1,74 @@
+package it.univaq.agile.biblionet;
+
+import static org.junit.jupiter.api.Assertions.*;
+import java.util.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+public class CatalogoTest {
+	private Catalogo catalogo;
+
+	//eseguito prima di ogni test e per creare un catalogo con 2 libri
+	@BeforeEach
+	void preparaCatalogo() {
+		//Primo libro: è una novità ed è disponibile
+		Libro harryPotter = new Libro("Harry Potter", List.of("J.K. Rowling"), "Salani", 2000,
+				"978-88-04-6", "Fantasy", "Italiano", "10-12", true, true);
+		// Secondo libro: non è una novità e non è disponibile
+		Libro promessiSposi = new Libro("I promessi sposi", List.of("Alessandro Manzoni"), "Mondadori", 1827,
+				"978-88-04-7", "Romanzo", "Italiano", "14+", false, false);
+		catalogo = new Catalogo(List.of(harryPotter, promessiSposi));
+	}
+
+	@Test
+	@DisplayName("UE-03A: Dato che l'utente è nella schermata del catalogo, quando visualizza"
+			+ "la lista dei libri, allora il sistema mostra l'elenco completo...")
+	void testElencoCompleto() {
+	//chiedo l'elenco al catalogo
+		List<Libro> elenco = catalogo.getElencoLibri();
+
+		// Controlliamo che ci siano 2 libri, nell'ordine in cui li abbiamo inseriti
+		assertEquals(2, elenco.size());
+		assertEquals("Harry Potter", elenco.get(0).getTitolo());
+		assertEquals("I promessi sposi", elenco.get(1).getTitolo());
+	}
+	
+	@Test
+	@DisplayName("UE-03A: ... con dettagli,...")
+	void testDettagliDelLibro() {
+		// Prendiamo il primo libro dell'elenco
+		Libro libro = catalogo.getElencoLibri().get(0);
+		
+		// Controlliamo che ogni dettaglio sia quello che abbiamo inserito
+		assertEquals("Harry Potter", libro.getTitolo());
+		assertEquals(List.of("J.K. Rowling"), libro.getAutori());
+		assertEquals("Salani", libro.getEditore());
+		assertEquals(2000, libro.getAnno());
+		assertEquals("978-88-04-6", libro.getIsbn());
+		assertEquals("Fantasy", libro.getGenere());
+		assertEquals("Italiano", libro.getLingua());
+		assertEquals("10-12", libro.getFasciaEta());
+		assertTrue(libro.isNovita());
+	}
+
+	@Test
+	@DisplayName("UE-03A: ... stato (disponibile o non disponibile)")
+	void testStatoDisponibileENonDisponibile() {
+		// Chiediamo l'elenco al catalogo
+		List<Libro> elenco = catalogo.getElencoLibri();
+		
+		// Il primo libro deve risultare disponibile, il secondo no
+		assertTrue(elenco.get(0).isDisponibile(), "Harry Potter deve risultare disponibile");
+		assertFalse(elenco.get(1).isDisponibile(), "I promessi sposi deve risultare non disponibile");
+	}
+
+	@Test
+	@DisplayName("Un catalogo senza libri restituisce un elenco vuoto")
+	void testCatalogoVuoto() {
+		// Creiamo un catalogo senza nessun libro
+		Catalogo vuoto = new Catalogo(new ArrayList<>());
+		// L'elenco deve essere vuoto
+		assertTrue(vuoto.getElencoLibri().isEmpty());
+	}
+}
