@@ -162,53 +162,53 @@ public class PrestitoTest {
 	 		+ "bibliotecario ne registra il rientro, allora il sistema rende la copia "
 	 		+ "di nuovo disponibile")
 	 void testRestituzioneRendeLibroDisponibile() {
-	 // Prestiamo Harry Potter all'utente: ora non è disponibile
-	 biblioteca.registraPrestito(utente.getCodiceTessera(), "978-88-04-6");
-
-	 // Il bibliotecario registra il rientro del libro
-	 boolean restituito = biblioteca.registraRestituzione("978-88-04-6");
-
-	 // La restituzione riesce e il libro è di nuovo disponibile
-	 assertTrue(restituito);
-	 assertTrue(harryPotter.isDisponibile());
+		 // Prestiamo Harry Potter all'utente: ora non è disponibile
+		 biblioteca.registraPrestito(utente.getCodiceTessera(), "978-88-04-6");
+	
+		 // Il bibliotecario registra il rientro del libro
+		 boolean restituito = biblioteca.registraRestituzione("978-88-04-6");
+	
+		 // La restituzione riesce e il libro è di nuovo disponibile
+		 assertTrue(restituito);
+		 assertTrue(harryPotter.isDisponibile());
 	 }
 
 	 @Test
 	 @DisplayName("Dopo il rientro il prestito non risulta più in corso")
 	 void testRestituzioneChiudeIlPrestito() {
-	 biblioteca.registraPrestito(utente.getCodiceTessera(), "978-88-04-6");
-
-	 biblioteca.registraRestituzione("978-88-04-6");
-
-	 // Non c'è più nessun prestito in corso per quel libro
-	 assertNull(biblioteca.trovaPrestito("978-88-04-6"));
+		 biblioteca.registraPrestito(utente.getCodiceTessera(), "978-88-04-6");
+	
+		 biblioteca.registraRestituzione("978-88-04-6");
+	
+		 // Non c'è più nessun prestito in corso per quel libro
+		 assertNull(biblioteca.trovaPrestito("978-88-04-6"));
 	 }
 	 
 	 @Test
 	 @DisplayName("Un libro non disponibile che non è in prestito non si può restituire")
 	 void testRestituzioneDiLibroNonInPrestito() {
-	 // I promessi sposi non è disponibile, ma nessuno lo ha preso in prestito
-	 assertFalse(biblioteca.registraRestituzione("978-88-04-7"));
-
-	 // Il libro resta com'era
-	 assertFalse(promessiSposi.isDisponibile());
+		 // I promessi sposi non è disponibile, ma nessuno lo ha preso in prestito
+		 assertFalse(biblioteca.registraRestituzione("978-88-04-7"));
+	
+		 // Il libro resta com'era
+		 assertFalse(promessiSposi.isDisponibile());
 	 }
 	 
 	 @Test 
-	  @DisplayName("Un libro già disponibile non si può restituire") 
-	  void testRestituzioneDiLibroDisponibile() { 
-	  // Harry Potter è disponibile e nessuno lo ha preso in prestito 
-	  boolean risultato = biblioteca.registraRestituzione("978-88-04-6"); 
-	  // La restituzione deve fallire 
-	 assertFalse(risultato); 
-	  // Lo stato del libro non deve cambiare 
-	  assertTrue(harryPotter.isDisponibile()); 
+	 @DisplayName("Un libro già disponibile non si può restituire") 
+	 void testRestituzioneDiLibroDisponibile() { 
+		  // Harry Potter è disponibile e nessuno lo ha preso in prestito 
+		  boolean risultato = biblioteca.registraRestituzione("978-88-04-6"); 
+		  // La restituzione deve fallire 
+		  assertFalse(risultato); 
+		  // Lo stato del libro non deve cambiare 
+		  assertTrue(harryPotter.isDisponibile()); 
 	 }  
 
 	 @Test
 	 @DisplayName("Con un ISBN inesistente la restituzione non riesce")
 	 void testRestituzioneConIsbnInesistente() {
-	 assertFalse(biblioteca.registraRestituzione("000-00-00-0"));
+		 assertFalse(biblioteca.registraRestituzione("000-00-00-0"));
 	 }
 
 
