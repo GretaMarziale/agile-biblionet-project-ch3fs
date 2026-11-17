@@ -39,4 +39,9 @@ public class Catalogo {
 		}
 		return false; 
 	}
+	
+	// Cerca un libro con il suo ISBN. Se non esiste restituisce null
+	public Libro trovaLibro(String isbn) {
+		return mappaLibri.get(isbn);
+	}
 }
