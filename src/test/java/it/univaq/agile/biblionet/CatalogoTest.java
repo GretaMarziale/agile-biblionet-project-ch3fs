@@ -22,7 +22,7 @@ public class CatalogoTest {
 	}
 
 	@Test
-	@DisplayName("UE-03A: Dato che l'utente è nella schermata del catalogo, quando visualizza"
+	@DisplayName("UE-03A: Dato che l'utente è nella schermata del catalogo, quando visualizza "
 			+ "la lista dei libri, allora il sistema mostra l'elenco completo...")
 	void testElencoCompleto() {
 	//chiedo l'elenco al catalogo
@@ -92,5 +92,44 @@ public class CatalogoTest {
 		catalogo.prenotaLibro(libro);
 		// Il libro prenotato non deve più essere disponibile
 		assertFalse(catalogo.getElencoLibri().get(0).isDisponibile());
+	}
+	
+	@Test
+	@DisplayName("Un libro non disponibile non si può prenotare")
+	void testPrenotazioneLibroNonDisponibile() {
+		// Prendiamo I promessi sposi, che non è disponibile
+		Libro libro = catalogo.getElencoLibri().get(1);
+		// La prenotazione non deve riuscire
+		assertFalse(catalogo.prenotaLibro(libro));
+	}
+
+	@Test
+	@DisplayName("Lo stesso libro non si può prenotare due volte")
+	void testPrenotazioneDoppia() {
+		// Prendiamo Harry Potter, che è disponibile
+		Libro libro = catalogo.getElencoLibri().get(0);
+		// La prima prenotazione riesce, la seconda no
+		assertTrue(catalogo.prenotaLibro(libro));
+		assertFalse(catalogo.prenotaLibro(libro));
+	}
+
+	@Test
+	@DisplayName("Un libro che non è nel catalogo non si può prenotare")
+	void testPrenotazioneLibroNonPresenteNelCatalogo() {
+		// Creiamo la lista degli autori del libro
+		List<String> autori = new ArrayList<>();
+		autori.add("J.R.R. Tolkien");
+		// Creiamo un libro che non inseriamo nel catalogo
+		Libro estraneo = new Libro("Il Signore degli Anelli", autori, "Bompiani", 1954,
+				"978-88-04-8", "Fantasy", "Italiano", "14+", false, true);
+		// La prenotazione non deve riuscire
+		assertFalse(catalogo.prenotaLibro(estraneo));
+	}
+
+	@Test
+	@DisplayName("Non si può prenotare senza scegliere nessun libro")
+	void testPrenotazioneSenzaLibro() {
+		// Se non scegliamo nessun libro (null), la prenotazione non deve riuscire
+		assertFalse(catalogo.prenotaLibro(null));
 	}
 }
