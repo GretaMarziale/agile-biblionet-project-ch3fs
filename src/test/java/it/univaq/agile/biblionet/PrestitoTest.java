@@ -48,4 +48,24 @@ public class PrestitoTest {
 		// Un ISBN che non esiste non deve trovare nessun libro
 		assertNull(catalogo.trovaLibro("000-00-00-0"));
 	}
+	
+	@Test
+	@DisplayName("Un utente iscritto è idoneo al prestito")
+	void testUtenteIdoneoAlPrestito() {
+		// Registriamo un utente
+		SistemaBiblioteca sistema = new SistemaBiblioteca();
+		Persona utente = sistema.registra("Aurora", "Braconi", Ruolo.UTENTE);
+		// Un utente può prendere un libro in prestito
+		assertTrue(utente.isIdoneaAlPrestito());
+	}
+
+	@Test
+	@DisplayName("Un bibliotecario non è idoneo al prestito")
+	void testBibliotecarioNonIdoneoAlPrestito() {
+		// Registriamo un bibliotecario
+		SistemaBiblioteca sistema = new SistemaBiblioteca();
+		Persona bibliotecario = sistema.registra("Anna", "Verdi", Ruolo.BIBLIOTECARIO);
+		// Un bibliotecario non può prendere un libro in prestito con la sua tessera di servizio
+		assertFalse(bibliotecario.isIdoneaAlPrestito());
+	}
 }

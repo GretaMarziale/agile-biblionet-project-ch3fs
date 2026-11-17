@@ -29,4 +29,9 @@ public class Persona {
     public String getCodiceTessera() {
         return codice;
     }
+    
+    // Una persona è idonea al prestito solo se è un utente iscritto (non un bibliotecario o il responsabile)
+ 	public boolean isIdoneaAlPrestito() {
+ 		return ruolo == Ruolo.UTENTE;
+ 	}
 }
